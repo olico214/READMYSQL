@@ -18,4 +18,4 @@ Se necesita crear una conexion entre ambas tablas para hacer el analisis
 	7° analisar meses anterior (year month back ) vs mes actual (year month today) -
 
 	start
-	
+	1
