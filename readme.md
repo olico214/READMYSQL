@@ -17,5 +17,4 @@ Se necesita crear una conexion entre ambas tablas para hacer el analisis
 	6° Total de inventario vs ventas (Generar Dashboard para conocer la tendencia de venta) -
 	7° analisar meses anterior (year month back ) vs mes actual (year month today) -
 
-	start
-	1
+	
