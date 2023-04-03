@@ -19,8 +19,8 @@ try:
         with conexion.cursor() as cursor:
             # En este caso no necesitamos limpiar ningún dato
             cursor.execute("SELECT Producto, Descrip, sum(Cantidad), cast(FADUA as date)   "    +
-            "from ticketsdetalle where FADUA >= '2023-01-01' and FADUA <= '2023-01-31' " +
-            "group by Producto " +
+            "from ticketsdetalle where FADUA >= '2023-01-01' and FADUA <= '2023-03-31' " +
+            "group by Cantidad, FADUA " +
             "order by FADUA ;")
 
             # Con fetchall traemos todas las filas
