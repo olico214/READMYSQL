@@ -25,6 +25,20 @@ try:
 
             # Con fetchall traemos todas las filas
             data = cursor.fetchall()
+            
+            
+            
+        with conexion.cursor() as historico:
+            # En este caso no necesitamos limpiar ningún dato
+            historico.execute("select Producto, ExistenciaActual from historicoalmacen")
+
+            # Con fetchall traemos todas las filas
+            datahist = cursor.fetchall()
+            
+            producto_2 = []
+            cntidad_2=[]
+            
+            
 
             # Recorrer e imprimir
             producto = []
@@ -41,6 +55,8 @@ try:
 
             # Crear el nombre completo del archivo a guardar
             nombre_archivo = os.path.join(ruta_destino, "productos.xlsx")
+            nombre_archivo_2 = os.path.join(ruta_destino, "almacen.xlsx")
+            
 
 
             wb = openpyxl.Workbook()
@@ -48,12 +64,29 @@ try:
             hoja.append(('Producto', 'Descripción', 'Venta', 'Fecha'))
             # Crear una lista de tuplas con los datos
             datos_filas = [(datos[0], datos[1], datos[2], datos[3]) for datos in data]
+            
+            
 
             # Agregar la lista completa como una fila en la hoja de trabajo
             for fila in datos_filas:
                 hoja.append(fila)
             try:
                 wb.save(nombre_archivo)
+                            #print(datos[0])
+            except:
+                print("Cierre alrchivo para continuar")
+            
+            wb_2 = openpyxl.Workbook()
+            hoja_2 = wb.active
+            hoja_2.append(('Producto', 'Cantidad'))
+            # Crear una lista de tuplas con los datos
+            datos_filas_2 = [(datos[0], datos[1]) for datos in datahist]
+            
+            for fila_2 in datos_filas:
+                hoja_2.append(fila_2)
+                
+            try:
+                wb_2.save(nombre_archivo_2)
                             #print(datos[0])
             except:
                 print("Cierre alrchivo para continuar")
