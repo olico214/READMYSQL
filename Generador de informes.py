@@ -15,7 +15,10 @@ import datetime
 
 class Buscador:
     def __init__(self):
+        self.ruta_Global = 0
         self.root = Tk()
+        self.root.after(0, self.conexion_temporaly)
+
         self.root.title("ACTUALIZADOR")
         self.root.geometry("480x240")
         
@@ -40,6 +43,60 @@ class Buscador:
         
         
         self.root.mainloop()
+
+
+    def cargar_ruta_global(self):
+        folder_path = filedialog.askdirectory()
+        print("La carpeta seleccionada es:", folder_path)
+
+    def conexion_temporaly(self):
+        
+       # Obtener la ruta actual del archivo
+        ruta_actual = os.path.dirname(os.path.abspath(__file__))
+
+        # Crear la ruta completa de la carpeta de destino y crearla si no existe
+        ruta_destino = os.path.join(ruta_actual, "ArchivosExcel")
+        
+
+
+        if not os.path.exists(ruta_destino):
+            os.makedirs(ruta_destino)
+        
+
+        ruta_destino = os.path.join(ruta_actual, "ArchivosExcel")
+
+        if ruta_destino == "":
+            return 0
+            # Crear un nuevo libro de Excel y obtener la hoja activa
+        ruta = messagebox.askyesno("Nueva Ruta","¿ Quiere seleccionar una nueva ruta donde guardar la información ?")
+
+        if ruta == True:
+            folder_path = filedialog.askdirectory()
+            wb = openpyxl.Workbook()
+            hoja_activa = wb.active
+
+            # Insertar la ruta de destino en la celda A1
+            hoja_activa['A1'] = folder_path
+
+            # Guardar el libro de Excel
+            wb.save(os.path.join(ruta_destino, 'RutaGlobal.xlsx'))
+            self.ruta_Global = folder_path
+            # Imprimir el contenido de la celda A1
+            print("El contenido de la celda A1 es:", self.ruta_Global)
+        
+        if ruta == False:
+            # Abrir el libro de Excel y obtener la hoja activa
+            wb = openpyxl.load_workbook(os.path.join(ruta_destino, 'RutaGlobal.xlsx'))
+            hoja_activa = wb.active
+
+            # Leer el contenido de la celda A1
+            self.ruta_Global = hoja_activa['A1'].value
+
+            # Imprimir el contenido de la celda A1
+            print("El contenido de la celda A1 es:", self.ruta_Global)
+
+        
+        
         
     def conexion_90(self):
         try:
@@ -83,16 +140,11 @@ class Buscador:
                     cantidad = []
                     fecha = []
 
-                    ruta_actual = os.path.dirname(os.path.abspath(__file__))
-
-                    # Crear la ruta completa de la carpeta de destino y crearla si no existe
-                    ruta_destino = os.path.join(ruta_actual, "ArchivosExcel")
-                    if not os.path.exists(ruta_destino):
-                        os.makedirs(ruta_destino)
+                    
 
                     # Crear el nombre completo del archivo a guardar
-                    nombre_archivo = os.path.join(ruta_destino, "productos.xlsx")
-                    nombre_archivo_2 = os.path.join(ruta_destino, "almacen.xlsx")
+                    nombre_archivo = os.path.join(self.ruta_Global, "productos.xlsx")
+                    nombre_archivo_2 = os.path.join(self.ruta_Global, "almacen.xlsx")
 
                     wb = openpyxl.Workbook()
                     hoja = wb.active
@@ -166,15 +218,10 @@ class Buscador:
                 
                 self.log.insert(tk.END, "DATOS DESCARGADOS CON EXITO")
                 
-                ruta_actual = os.path.dirname(os.path.abspath(__file__))
-
-                # Crear la ruta completa de la carpeta de destino y crearla si no existe
-                ruta_destino = os.path.join(ruta_actual, "ArchivosExcel")
-                if not os.path.exists(ruta_destino):
-                    os.makedirs(ruta_destino)
+                
 
                 # Crear el nombre completo del archivo a guardar
-                nombre_archivo = os.path.join(ruta_destino, "historico.xlsx")
+                nombre_archivo = os.path.join(self.ruta_Global, "historico.xlsx")
                 
 
                 wb = openpyxl.Workbook()
