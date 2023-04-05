@@ -83,17 +83,22 @@ class Buscador:
             self.ruta_Global = folder_path
             # Imprimir el contenido de la celda A1
             print("El contenido de la celda A1 es:", self.ruta_Global)
+            self.log.insert(tk.END, self.ruta_Global)
         
         if ruta == False:
+            try:
             # Abrir el libro de Excel y obtener la hoja activa
-            wb = openpyxl.load_workbook(os.path.join(ruta_destino, 'RutaGlobal.xlsx'))
-            hoja_activa = wb.active
+                wb = openpyxl.load_workbook(os.path.join(ruta_destino, 'RutaGlobal.xlsx'))
+                hoja_activa = wb.active
 
-            # Leer el contenido de la celda A1
-            self.ruta_Global = hoja_activa['A1'].value
+                # Leer el contenido de la celda A1
+                self.ruta_Global = hoja_activa['A1'].value
 
-            # Imprimir el contenido de la celda A1
-            print("El contenido de la celda A1 es:", self.ruta_Global)
+                # Imprimir el contenido de la celda A1
+                print("El contenido de la celda A1 es:", self.ruta_Global)
+                self.log.insert(tk.END,  self.ruta_Global)
+            except:
+                messagebox.showinfo("Info","Debe seleccionar una ruta para continuar")
 
         
         
