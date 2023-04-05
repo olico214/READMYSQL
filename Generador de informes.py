@@ -20,7 +20,7 @@ class Buscador:
         self.root.after(0, self.conexion_temporaly)
 
         self.root.title("ACTUALIZADOR")
-        self.root.geometry("480x240")
+        self.root.geometry("560x380")
         
         self.cuerpo= ttk.Frame(self.root)
         self.cuerpo.place(x=0,y=0,height=480, width=480)
@@ -31,10 +31,13 @@ class Buscador:
         self.historico.place(x=10,y=60,width=200)
         
         self.historico_90 = ttk.Button(self.root, text="INFORME A 90 DIAS", command=self.conexion_90)
-        self.historico_90.place(x=230,y=60,width=200)
+        self.historico_90.place(x=280,y=60,width=200)
         
         self.log = tk.Listbox(self.root)
-        self.log.place(x=10,y=100,width=450,height=100)
+        self.log.place(x=10,y=100,width=500,height=200)
+
+        self.cargar = ttk.Button(self.root, text="Cargar Ruta", command=self.conexion_temporaly)
+        self.cargar.place(x=420,y=310)
         
         
         
@@ -45,9 +48,6 @@ class Buscador:
         self.root.mainloop()
 
 
-    def cargar_ruta_global(self):
-        folder_path = filedialog.askdirectory()
-        print("La carpeta seleccionada es:", folder_path)
 
     def conexion_temporaly(self):
         
@@ -55,7 +55,7 @@ class Buscador:
         ruta_actual = os.path.dirname(os.path.abspath(__file__))
 
         # Crear la ruta completa de la carpeta de destino y crearla si no existe
-        ruta_destino = os.path.join(ruta_actual, "ArchivosExcel")
+        ruta_destino = os.path.join(ruta_actual, "Ruta_generada")
         
 
 
@@ -63,10 +63,9 @@ class Buscador:
             os.makedirs(ruta_destino)
         
 
-        ruta_destino = os.path.join(ruta_actual, "ArchivosExcel")
+        ruta_destino = os.path.join(ruta_actual, "Ruta_generada")
 
-        if ruta_destino == "":
-            return 0
+        
             # Crear un nuevo libro de Excel y obtener la hoja activa
         ruta = messagebox.askyesno("Nueva Ruta","¿ Quiere seleccionar una nueva ruta donde guardar la información ?")
 
