@@ -3,7 +3,7 @@ import mysql.connector
 import openpyxl
 from mysql.connector import Error
 import os
-
+import datetime
 
 try:
     conexion = mysql.connector.connect(
@@ -17,11 +17,23 @@ try:
     if conexion.is_connected():
         print("Conexión exitosa.")
         with conexion.cursor() as cursor:
+            fecha_hoy = datetime.date.today()
+            date_today = fecha_hoy.strftime('%Y-%m-%d')
+
+            fecha_90_dias_atras = fecha_hoy - datetime.timedelta(days=90)
+            date_today_90 = fecha_90_dias_atras.strftime('%Y-%m-%d')
+            
+            
+            print(date_today)
+            print(date_today_90)
+            
             # En este caso no necesitamos limpiar ningún dato
             cursor.execute("SELECT Producto, Descrip, sum(Cantidad), cast(FADUA as date)   "    +
-            "from ticketsdetalle where FADUA >= '2023-01-01' and FADUA <= '2023-03-31' " +
+            "from ticketsdetalle where FADUA >= '" + date_today_90 + "' and FADUA <= '" + date_today +"' " +
             "group by Producto, FADUA " +
             "order by FADUA ;")
+            
+            
 
             # Con fetchall traemos todas las filas
             data = cursor.fetchall()
@@ -79,6 +91,10 @@ try:
                 wb_2.save(nombre_archivo_2)
             except:
                 print("Cierre archivo para continuar")
+                
+                
+                
+            print("consultas finalizadas")    
 except Exception as e:
     print(f"Ocurrió un error: {str(e)}")
 finally:
