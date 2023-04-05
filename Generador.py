@@ -15,8 +15,9 @@ import datetime
 
 class Buscador:
     def __init__(self):
-        self.ruta_Global = 0
+        
         self.root = Tk()
+        self.ruta_Global = 0
         self.root.after(0, self.conexion_temporaly)
 
         self.root.title("ACTUALIZADOR")
@@ -103,16 +104,18 @@ class Buscador:
         
         
     def conexion_90(self):
+        print("error")
         try:
             conexion = mysql.connector.connect(
             host='localhost',
             port=3306,
             user='root',
             password='',
-            db='testv1'
+            db='datos1'
             )
-
+            print("error")
             if conexion.is_connected():
+                
                 self.log.insert(tk.END, "CONEXION A LA BASE DE DATOS EXITOSA")
                 with conexion.cursor() as cursor:
                     fecha_hoy = datetime.date.today()
@@ -122,7 +125,7 @@ class Buscador:
                     date_today_90 = fecha_90_dias_atras.strftime('%Y-%m-%d')
                     
                     
-                    print()
+                    print("error")
                     self.log.insert(tk.END, "FECHA DE HOY: " +  date_today)
                     print(date_today_90)
                     self.log.insert(tk.END, "FECHA DE 90 DIAS ATRAS: " +  date_today_90)
@@ -194,10 +197,10 @@ class Buscador:
             print(f"Ocurrió un error: {str(e)}")
             self.log.insert(tk.END, "OCURRIO UN ERROR")  
         finally:
-                if conexion.is_connected():
-                    cursor.close()
-                    conexion.close()
-                    self.log.insert(tk.END, "PROCESO FINALIZADO")  
+            if conexion.is_connected():
+                cursor.close()
+                conexion.close()
+                self.log.insert(tk.END, "PROCESO FINALIZADO")  
 
             
         
@@ -208,7 +211,7 @@ class Buscador:
                 port=3306,
                 user='root',
                 password='',
-                db='testv1'
+                db='datos1'
             )
 
             if conexion.is_connected():
@@ -248,10 +251,10 @@ class Buscador:
             print(f"Ocurrió un error: {str(e)}")
             self.log.insert(tk.END, "OCURRIO UN ERROR")  
         finally:
-                if conexion.is_connected():
-                    cursor.close()
-                    conexion.close()
-                    self.log.insert(tk.END, "PROCESO FINALIZADO") 
+            if conexion.is_connected():
+                cursor.close()
+                conexion.close()
+                self.log.insert(tk.END, "PROCESO FINALIZADO") 
                         
                         
             
